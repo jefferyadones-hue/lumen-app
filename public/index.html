@@ -164,10 +164,17 @@
     showView('view-admin', 'tabAdmin');
   });
 
-  document.getElementById('signupForm').addEventListener('submit', function(e){
+  document.getElementById('signupForm').addEventListener('submit', async function(e){
     e.preventDefault();
     draft.email = document.getElementById('email').value;
     draft.password = document.getElementById('password').value;
+
+    await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(draft)
+    });
+
     document.getElementById('verifySub').textContent = 'We sent a 6-digit code to ' + draft.email + '.';
     show('screen-verify');
   });
